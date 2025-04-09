@@ -19,7 +19,7 @@ void setup() {
   oled.setFont(Adafruit5x7);
   oled.clear();
   oled.setCursor(0, 0);
-  oled.println("Receiver Ready! :D");
+  oled.println("Bell Ready! :D");
 
   rf_driver.init();
   pinMode(Speaker, OUTPUT);
@@ -31,16 +31,33 @@ void loop() {
 
   if (rf_driver.recv(buf, &buflen)) {
     String msg = String((char*)buf);
+    unsigned long ms = millis();
+
+    // Convert to hours, minutes, seconds
+    unsigned long seconds = ms / 1000;
+    unsigned int hours = seconds / 3600;
+    unsigned int minutes = (seconds % 3600) / 60;
+    unsigned int secs = seconds % 60;
+
+    // Format time as hh:mm:ss
+    char timeStr[10];
+    sprintf(timeStr, "%02u:%02u:%02u", hours, minutes, secs);
+
     Serial.print("Message Received: ");
     Serial.println(msg);
-    
+    Serial.print("Time: ");
+    Serial.println(timeStr);
+
     Bell();
 
-    // Show message on OLED
+    // Show message and timestamp on OLED
     oled.clear();
     oled.setCursor(0, 0);
-    oled.println("Message:");
     oled.println(msg);
+    oled.setCursor(0, 40);
+    oled.print("Time: ");
+    oled.println(timeStr);
+
     delay(2000); // Show message for 2 seconds
   }
 }
