@@ -11,12 +11,14 @@
 
 // OLED setup using SSD1306Ascii
 SSD1306AsciiWire oled;
-
 RH_ASK rf_driver;
 
 // Define ultrasonic sensor pins
 const int trigPin = 9;
 const int echoPin = 10;
+
+//Receiver on pin 11
+//Transmitter on pin 12
 
 void setup() {
     // Initialize serial communication and RF driver

@@ -10,6 +10,9 @@ SSD1306AsciiWire oled;
 RH_ASK rf_driver;
 int Speaker = 3;
 
+//Receiver on pin 11
+//Transmitter on pin 12
+
 void setup() {
   Serial.begin(9600);
   Wire.begin(); // Initialize I2C
